@@ -7,12 +7,12 @@ import (
 	"testing"
 )
 
-func TestValues(t *testing.T) {
+//
+// Each function can add structured context values to the error
+// without any lose of functionality
+//
 
-	//
-	// Each function can add structured context values to the error
-	// without any lose of functionality
-	//
+func demoErrorStack() error {
 
 	f3 := func() error {
 		return errors.New("F3 Error")
@@ -34,7 +34,12 @@ func TestValues(t *testing.T) {
 		return nil
 	}
 
-	err := f1()
+	return f1()
+}
+
+func TestValues(t *testing.T) {
+
+	err := demoErrorStack()
 
 	b, err := json.Marshal(Values(err))
 	if err != nil {

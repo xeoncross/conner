@@ -6,6 +6,33 @@ This is not a logging library - it's a supplemental error library.
 
 If an error happens somewhere in the call stack, then each caller can append some metadata to the error and pass it up so that the final root caller will have all the information about each of the contexts that the error happened in and can use a logger like [github.com/rs/zerolog](https://github.com/rs/zerolog) or [github.com/sirupsen/logrus](https://github.com/sirupsen/logrus).
 
+## Usage
+
+Simply setup `conner.Logger{}` with an instance of logrus, zerolog, or plain [pkg/log/](https://golang.org/pkg/log/).
+
+```go
+l := logrus.StandardLogger()
+l.SetFormatter(&logrus.JSONFormatter{})
+
+logger := conner.Logger{
+  Logrus: l,
+}
+
+// Create an error with some appended context
+err := conner.Error(errors.New("Error"), map[string]interface{}{"foo": "bar"})
+
+// Write to the logger saving all structured context as JSON fields
+logger.Error(err)
+```
+
+of course, the real benefit is wrapping errors
+
+```go
+if err != nil {
+    return conner.Error(fmt.Errorf("Loading File: %w", err), map[string]interface{}{"file": "foo.txt"})
+}
+```
+
 
 ## Background
 
