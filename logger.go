@@ -7,27 +7,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// TODO some kind of instance with helper functions that call log()?
+// Logger instance for logging errors with context
 type Logger struct {
 	logger  *log.Logger
 	logrus  *logrus.Logger
 	zerolog *zerolog.Logger
 }
 
-func (l *Logger) log(level string, err error) {
-
-	// var msg string
-	// var values map[string]interface{}
-	//
-	// switch v := message.(type) {
-	// case error:
-	// 	msg = v.Error()
-	// 	values = Values(v)
-	// case string:
-	// 	msg = v
-	// default:
-	// 	panic("Invalid message type")
-	// }
+// Error logging with structured values from error chain
+func (l *Logger) Error(err error) {
 
 	values := Values(err)
 
@@ -38,15 +26,9 @@ func (l *Logger) log(level string, err error) {
 	if l.logrus != nil {
 		l.logrus.WithFields(logrus.Fields(values)).Error(err)
 	}
-}
 
-// TODO manual functions for this?
-// func Logrus(log *logrus.Logger, err error) {
-// 	values := Values(err)
-//
-// 	if values != nil {
-// 		log.WithFields(logrus.Fields(values)).Error(err)
-// 	} else {
-// 		log.Error(err)
-// 	}
-// }
+	if l.zerolog != nil {
+		// https://github.com/rs/zerolog/blob/master/event.go#L148
+		l.zerolog.Err(err).Fields(values).Msg("")
+	}
+}

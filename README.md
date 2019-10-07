@@ -30,3 +30,8 @@ Or a structured log of:
      {"foo_id":"114153","level":"info","msg":"JSON Decode: EOF","time":"2019-10-07T11:55:55-00:00"}
 
 This is the problem Conner solves: structured errors with additional parameters at each wrapped level to help when logging errors.
+
+
+## Thanks
+
+Special thanks to [/u/Nathanfenner](https://www.reddit.com/user/Nathanfenner/) for his [implementation of this idea](https://play.golang.org/p/mco6HySZENv)
