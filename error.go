@@ -2,6 +2,10 @@ package conner
 
 import "errors"
 
+// Fields to append to the structured error when logging
+// alias to reduce typing?
+// type Fields map[string]interface{}
+
 type structuredError struct {
 	err    error
 	fields map[string]interface{}
