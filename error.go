@@ -1,10 +1,12 @@
 package conner
 
-import "errors"
+import (
+	"errors"
+)
 
-// Fields to append to the structured error when logging
-// alias to reduce typing?
-// type Fields map[string]interface{}
+// Map of fields to append to the structured error when logging
+// Alias to save typing
+type Map map[string]interface{}
 
 type structuredError struct {
 	err    error
@@ -25,6 +27,13 @@ func (err structuredError) Unwrap() error {
 func Error(err error, fields map[string]interface{}) error {
 	return structuredError{err: err, fields: fields}
 }
+
+// Unclear half-mix of fmt directives (required %w, but no others allowed)
+// Can lead to runtime errors
+// Errorf wrap error message and set error fields
+// func Errorf(msg string, err error, fields map[string]interface{}) error {
+// 	return structuredError{err: fmt.Errorf(msg, err), fields: fields}
+// }
 
 // Values from each error on the error chain
 func Values(err error) map[string]interface{} {

@@ -79,3 +79,8 @@ func (l *Logger) Error(err error) {
 		l.Zerolog.Err(err).Fields(fields).Msg("")
 	}
 }
+
+// TODO look at expanding this beyond the three main log methods
+// https://github.com/sagikazarmark/modern-go-application/blob/master/internal/common/logger.go
+// https://github.com/sirupsen/logrus/blob/master/logger.go
+// https://github.com/rs/zerolog/blob/master/log.go
