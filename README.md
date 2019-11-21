@@ -33,6 +33,10 @@ if err != nil {
 }
 ```
 
+## Alternatives
+
+- https://github.com/icelolly/go-errors
+
 
 ## Background
 
